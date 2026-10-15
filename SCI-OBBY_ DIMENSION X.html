@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>SCI-OBBY: DIMENSION X</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:#1b2a49;color:#fff;font-family:"Trebuchet MS",Verdana,sans-serif;min-height:100vh}
+.w{max-width:680px;margin:0 auto;padding:12px}
+.bar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:#0d1730;border:3px solid #000;border-radius:6px;padding:8px 12px;font-weight:800}
+.pill{background:#ffd43b;color:#000;border:3px solid #000;border-radius:6px;padding:2px 10px}
+button{font:inherit;cursor:pointer}
+.btn{background:#00b06f;color:#fff;border:3px solid #000;border-radius:6px;padding:12px 20px;font-weight:900;font-size:18px;box-shadow:0 5px 0 #006b44;text-transform:uppercase}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #006b44}
+.lang{background:#fff;color:#000;border:3px solid #000;border-radius:6px;padding:2px 10px;font-weight:800}
+.path{display:flex;gap:3px;margin:10px 0}
+.path i{flex:1;height:14px;background:#44527a;border:2px solid #000;border-radius:2px}
+.path i.ok{background:#37d67a}.path i.no{background:#ffa726}.path i.cur{background:#ffd43b}
+.card{background:#fff;color:#111;border:4px solid #000;border-radius:8px;padding:16px;box-shadow:0 8px 0 #000}
+.em{font-size:54px;text-align:center}
+.ctx{background:#e8f0ff;border:2px dashed #4666ff;border-radius:6px;padding:8px 10px;margin:8px 0;font-size:15px}
+.q{font-size:19px;font-weight:800;margin:10px 0}
+.opt{display:flex;gap:10px;align-items:center;width:100%;text-align:left;margin:8px 0;padding:10px;border:3px solid #000;border-radius:6px;background:#f1f1f1;color:#111;font-weight:700;font-size:16px;box-shadow:0 4px 0 #0006}
+.opt b{flex:none;width:32px;height:32px;display:grid;place-items:center;border:3px solid #000;border-radius:4px;color:#fff}
+.opt:nth-child(1) b{background:#e53935}.opt:nth-child(2) b{background:#1e88e5}.opt:nth-child(3) b{background:#f9a825}.opt:nth-child(4) b{background:#43a047}
+.opt.good{background:#37d67a}.opt.bad{background:#ff6b6b}.opt:disabled{cursor:default}
+.msg{font-weight:900;font-size:20px;margin:10px 0;text-align:center}
+.c{text-align:center}h1{font-size:40px;margin:10px 0;text-shadow:3px 3px 0 #000;color:#ffd43b}
+input{font:inherit;font-size:18px;padding:10px;border:3px solid #000;border-radius:6px;width:80%;text-align:center}
+.lb{background:#0d1730;border:3px solid #000;border-radius:6px;padding:8px;margin-top:14px;font-size:13px}.row{display:grid;grid-template-columns:1.5fr 1fr auto;gap:6px;align-items:center;padding:3px 4px}.row.me{background:#33498a}.bg{background:#44527a;border:2px solid #000;height:10px;border-radius:2px;overflow:hidden;display:block}.bg u{display:block;height:100%;background:#37d67a}.cd{font-size:120px;font-weight:900;color:#ffd43b;text-shadow:4px 4px 0 #000}small.en{display:block;font-style:italic;font-weight:600;opacity:.75;font-size:.85em}.opt.bad{opacity:.7}.sub{font-size:15px;margin:6px 0}.rv{color:#111;text-align:left;font-size:14px;border-bottom:1px solid #ccc;padding:6px 0}
+</style></head><body><div class="w" id="app"></div>
+<script>
+const Q=[
+{e:'🚲',q:['Yang manakah sifat KIMIA basikal ini?','Which is a CHEMICAL property of this bicycle?'],o:[['Diperbuat daripada besi','Made of iron'],['Mempunyai bentuk yang tetap','Has a fixed shape'],['Memerlukan tenaga kinetik untuk bergerak','Needs kinetic energy to move'],['Berkarat apabila terdedah kepada air dan udara','Rusts when exposed to water and air']],a:3},
+{e:'🧪',c:['Aina menggunakan 5 biji guli sama saiz dalam silinder penyukat. Aras awal air ≈ 14 cm³, aras akhir ≈ 44 cm³.','Aina uses 5 identical marbles in a measuring cylinder. Initial water level ≈ 14 cm³, final ≈ 44 cm³.'],q:['Berapakah isipadu sebiji guli?','What is the volume of one marble?'],o:['4 cm³','5 cm³','6 cm³','7 cm³'],a:2},
+{e:'👩‍🔬',c:['X: pekerja berbaju makmal, mikroskop & tabung uji. Y: orang menukul batu di atas tanah.','X: person in lab coat with microscope & test tubes. Y: person hammering rocks on the ground.'],q:['Apakah kerjaya X dan Y?','What are the careers of X and Y?'],o:[['X: Ahli mikrobiologi, Y: Ahli geologi','X: Microbiologist, Y: Geologist'],['X: Ahli botani, Y: Ahli zoologi','X: Botanist, Y: Zoologist'],['X: Ahli zoologi, Y: Ahli forensik','X: Zoologist, Y: Forensic expert'],['X: Ahli biologi, Y: Ahli geologi','X: Biologist, Y: Geologist']],a:0},
+{e:'🔬',q:['Struktur sel manakah membenarkan respirasi sel dalam haiwan dan tumbuhan?','Which cell structure enables cell respiration in animals and plants?'],o:[['Vakuol','Vacuole'],['Kloroplas','Chloroplast'],['Sitoplasma','Cytoplasm'],['Mitokondria','Mitochondria']],a:3},
+{e:'🦠',q:['Contoh organisma unisel yang mempunyai ciri sel tumbuhan sahaja?','Which unicellular organism has plant cell characteristics only?'],o:['Euglena','Ameba / Amoeba',['Paramesium','Paramecium'],['Klamidomonas','Chlamydomonas']],a:3},
+{e:'😓',c:['Amir berpeluh selepas bersenam.','Amir is sweating after exercise.'],q:['Pernyataan manakah betul?','Which statement is correct?'],o:[['Kurang penghasilan air kencing','Less formation of urine'],['Bulu roma menegak','Hairs stand erect'],['Salur darah mengecut','Blood vessels constrict'],['Otot rangka mengecut dan mengendur','Skeletal muscles contract and relax']],a:0},
+{e:'🏋️',c:['Seorang lelaki berehat selepas bersenam.','A man resting after exercising.'],q:['Pernyataan manakah betul?','Which statement is correct?'],o:[['Saluran darah mengecut','Blood vessels constrict'],['Kandungan air dalam badan meningkat','Water content in the body increases'],['Kelenjar peluh menghasilkan kurang peluh','Sweat glands produce less sweat'],['Ginjal mengurangkan penghasilan air kencing','Kidneys reduce production of urine']],a:2},
+{e:'📅',c:['Haid bermula pada 19 Ogos (hari pertama).','Menstruation starts on 19 August (day 1).'],q:['Bilakah beliau akan mengalami ovulasi?','When will she ovulate?'],o:[['26 Ogos','26 August'],['30 Ogos','30 August'],['1 September','1 September'],['7 September','7 September']],a:2},
+{e:'🧅',c:['Bawang merah membiak secara aseks.','Onions reproduce asexually.'],q:['Yang manakah betul tentang pembiakan ini?','Which is correct about this reproduction?'],o:[['Proses persenyawaan berlaku','Fertilisation occurs'],['Melibatkan tumbuhan berbunga','Involves flowering plants'],['Anak mempunyai ciri yang sama dengan induk','Offspring are identical to the parent'],['Melibatkan dua induk (gamet jantan & betina)','Involves two parents (male & female gametes)']],a:2},
+{e:'🌍',c:['Bahan yang mempunyai jisim dan memenuhi ruang.','Material that has mass and fills space.'],q:['Yang manakah merujuk kepada maklumat ini?','Which refers to this information?'],o:[['Haba','Heat'],['Bunyi','Sound'],['Tanah','Soil'],['Cahaya','Light']],a:2},
+{e:'⚗️',q:['Yang manakah betul tentang sebatian?','Which is correct about compounds?'],o:[['Dapat diasingkan melalui kaedah fizikal','Can be separated physically'],['Boleh mengkonduksikan elektrik','Can conduct electricity'],['Hanya dihasilkan di makmal','Produced in laboratory only'],['Terdiri daripada dua atau lebih unsur yang bergabung secara kimia','Two or more elements combined chemically']],a:3},
+{e:'🌬️',c:['Carta pai komposisi udara. Gas P ialah hirisan terkecil (gas lengai).','Air composition pie chart. Gas P is the smallest slice (inert gases).'],q:['Komponen gas manakah dalam gas P? I Besi, II Neon, III Sulfur, IV Kripton','Which components are in gas P? I Iron, II Neon, III Sulphur, IV Krypton'],o:['I & II','II & III','II & IV','III & IV'],a:2},
+{e:'🔥',c:['Segi tiga api: O₂, haba, bahan api.','Fire triangle: O₂, heat, fuel.'],q:['Apakah berlaku jika salah satu syarat disingkirkan?','What happens if one condition is removed?'],o:[['Semua aktiviti harian berlaku seperti biasa','All daily activities continue as usual'],['Populasi hidupan bertambah','Living populations increase'],['Pembakaran bahan api tidak dapat berlaku','Fuel combustion cannot occur'],['Kadar respirasi hidupan bertambah','Respiration rate increases']],a:2},
+{e:'🌈',c:['Cahaya keluar dari prisma disebar kepada tujuh warna = X.','Light leaving a prism is dispersed into seven colours = X.'],q:['Apakah X?','What is X?'],o:[['Spektrum cahaya','Spectrum of light'],['Pantulan cahaya','Reflection of light'],['Pembiasan cahaya','Refraction of light'],['Penyerakan cahaya','Scattering of light']],a:0},
+{e:'☂️',c:['Payung menghasilkan bayang-bayang di atas tanah.','An umbrella casts a shadow on the ground.'],q:['Sifat cahaya manakah menyebabkan fenomena ini?','Which property of light causes this?'],o:[['Cahaya boleh disebarkan','Light can be dispersed'],['Cahaya bergerak lurus','Light travels in a straight line'],['Cahaya bergerak dengan pantas','Light travels rapidly'],['Cahaya tidak boleh menembusi objek legap','Light cannot pass through opaque objects']],a:1},
+{e:'🟪',c:['Cahaya putih → penapis magenta → skrin hijau.','White light → magenta filter → green screen.'],q:['Apakah warna cahaya pada skrin?','What is the colour of the light on the screen?'],o:[['Magenta','Magenta'],['Hijau','Green'],['Hitam','Black'],['Putih','White']],a:2},
+{e:'🚗',q:['Cermin R dipasang di selekoh tajam supaya medan penglihatan lebih luas. Apakah cermin R?','Mirror R is installed at a sharp bend to widen the field of view. What is it?'],o:[['Cermin satah','Plane mirror'],['Cermin cekung','Concave mirror'],['Cermin cembung','Convex mirror'],['Cermin lutsinar','Transparent mirror']],a:2},
+{e:'💍',c:['Mineral ini digunakan untuk membuat barang perhiasan.','This mineral is used to make jewellery.'],q:['Apakah contoh mineral tersebut?','What is an example of this mineral?'],o:[['Emas','Gold'],['Bijih besi','Iron ore'],['Bijih timah','Tin'],['Arang batu','Coal']],a:0},
+{e:'🌋',c:['Rajah arus olakan: mantel panas naik, menyejuk dan turun semula.','Diagram of convection currents: hot mantle rises, cools and sinks.'],q:['Di manakah proses olakan mantel berlaku?','Where does mantle convection occur?'],o:[['Teras','Core'],['Litosfera','Lithosphere'],['Mesosfera','Mesosphere'],['Astenosfera','Asthenosphere']],a:3},
+{e:'🕳️',c:['Lubang besar muncul di tengah kawasan perumahan.','A huge hole opens up in a residential area.'],q:['Apakah geobencana ini?','What is this geohazard?'],o:[['Gempa bumi','Earthquake'],['Tanah runtuh','Landslide'],['Lubang benam','Sinkhole'],['Pemanasan global','Global warming']],a:2}
+];
+const b=x=>Array.isArray(x)?`${x[0]}<small class="en">${x[1]}</small>`:x;
+let i=-1,coins=0,streak=0,name='',tries=[],cur=0,bad=[],done=false,mute=false,AC=null,RM=null,R=null,host=false,go=null,lastGo=null,t0=0,tfin=0;
+function note(f,t,d,ty,v){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+t;o.type=ty||'square';o.frequency.value=f;g.gain.setValueAtTime(v||.12,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.connect(g);g.connect(AC.destination);o.start(s);o.stop(s+d+.02)}catch(e){}}
+function win(first){if(mute)return;const r=261.63*Math.pow(2,Math.min(i,12)/12);(first?[1,1.26,1.5,2,2.52]:[1,1.26,1.5]).forEach((m,k)=>note(r*m,k*.09,.18,'square',.1))}
+function fanfare(){if(mute)return;[523,659,784,1047,784,1047,1319].forEach((f,k)=>note(f,k*.14,.25,'square',.12))}
+function tgl(){mute=!mute;document.getElementById('mb').textContent=mute?'🔇':'🔊'}
+const $=document.getElementById('app'),esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
+function bar(){return `<div class="bar"><span>${host?'👑':'🎮'} ${esc(name||'Player')}</span><span class="pill">🪙 ${coins}</span><span class="pill">Streak 🔥 ${streak}</span><button class="lang" id="mb" onclick="tgl()">${mute?'🔇':'🔊'}</button></div>`}
+function path(){return `<div class="path">${Q.map((_,k)=>`<i class="${k<tries.length?(tries[k]?'no':'ok'):k==i?'cur':''}"></i>`).join('')}</div>`}
+function board(){
+ const ps=(R?R.peers():[]).filter(p=>p.presence&&p.presence.n).map(p=>({...p.presence,me:p.isMe&&p.sameTab}));
+ ps.sort((a,b)=>((b.t!=null)-(a.t!=null))||((a.t!=null&&b.t!=null)?a.t-b.t:0)||(Number(b.i)||0)-(Number(a.i)||0)||(Number(b.c)||0)-(Number(a.c)||0));
+ return `<div class="lb"><b>🏆 Leaderboard (${ps.length})</b>${ps.map((p,k)=>`<div class="row${p.me?' me':''}"><span>${k+1}. ${p.h?'👑':'🎮'} ${esc(p.n)}${p.me?' ⬅':''}</span><span class="bg"><u style="width:${Math.min(100,(Number(p.i)||0)*5)}%"></u></span><span>${p.t!=null?'🏁 '+esc(p.t)+'s':(Number(p.i)||0)+'/20'} 🪙${Number(p.c)||0}</span></div>`).join('')}</div>`}
+function upd(){const e=document.getElementById('lb');if(e)e.innerHTML=board()}
+function pub(){if(R)R.presence({n:name,i:tries.length,c:coins,h:host?1:0,t:i>=Q.length?Math.round((tfin-t0)/1000):null,go:host?go:null}).catch(()=>{})}
+function reset(){coins=0;streak=0;tries=[];cur=0;bad=[];done=false}
+function nm(){return (document.getElementById('nm').value.trim()||'Player').slice(0,16)}
+async function enter(){
+ name=nm();const c=(document.getElementById('rc').value.toLowerCase().replace(/[^a-z0-9]/g,'')||'kelas').slice(0,20);
+ try{R=await RM.join('sci-'+c);i=-2;reset();pub();R.onPeers(ch=>{upd();const h=ch.peers.find(p=>p.presence.h&&p.presence.go);if(h&&i===-2&&h.presence.go!==lastGo)cd(h.presence.go)});draw();return}catch(e){R=null}
+ solo1()}
+function solo1(){name=nm();R=null;reset();i=0;t0=Date.now();draw()}
+function startGo(){go=Date.now();pub();cd(go)}
+function cd(g){lastGo=g;i=-3;let n=3;(function tick(){if(n>0){$.innerHTML=bar()+`<div class="c"><div class="cd">${n}</div><div class="msg">Bersedia! / Get ready!</div></div>`;note(440,0,.15);n--;setTimeout(tick,800)}else{note(880,0,.4);reset();i=0;t0=Date.now();pub();draw()}})()}
+function draw(){
+ if(i===-1){$.innerHTML=`<div class="c"><h1>🧱 SCI-OBBY:<br>DIMENSION X 🌌</h1><div class="sub">Jawab dengan BETUL untuk buka stage seterusnya!<br><i>Answer CORRECTLY to unlock the next stage!</i></div><div class="sub">🏁 Berlumba dengan kawan secara langsung!<br><i>Race your classmates live!</i></div><input id="nm" placeholder="Nama pemain / Player name" maxlength="16"><p><input id="rc" placeholder="Kod bilik / Room code (cth: 5A)" maxlength="20"></p>${host?'<div class="sub">👑 Anda ialah host / You are the host</div>':''}<p>${RM?'<button class="btn" onclick="enter()">MASUK BILIK / JOIN ▶</button> ':''}<button class="btn" style="background:#4666ff;box-shadow:0 5px 0 #2a3fa8" onclick="solo1()">SOLO</button></p>${RM?'':'<div class="sub">Mod berbilang pemain tidak tersedia / Multiplayer unavailable</div>'}</div>`;return}
+ if(i===-2){$.innerHTML=bar()+`<div class="card c"><div class="em">🚪</div><h2>Lobi / Lobby</h2><div class="sub">Menunggu cikgu mulakan permainan...<br><i>Waiting for the teacher to start...</i></div>${host?'<button class="btn" onclick="startGo()">▶ MULAKAN SEMUA / START ALL</button>':''}</div><div id="lb"></div>`;upd();return}
+ if(i>=Q.length){fin();return}
+ const q=Q[i];
+ $.innerHTML=bar()+path()+`<div class="card"><div class="em">${q.e}</div><b>Stage ${i+1}/20</b>${q.c?`<div class="ctx">${b(q.c)}</div>`:''}<div class="q">${b(q.q)}</div>${q.o.map((o,k)=>`<button class="opt ${bad.includes(k)?'bad':''} ${done&&k==q.a?'good':''}" onclick="pick(${k})" ${bad.includes(k)||done?'disabled':''}><b>${'ABCD'[k]}</b><span>${b(o)}</span></button>`).join('')}<div id="m"></div></div>${R?'<div id="lb"></div>':''}`;upd();
+}
+function pick(k){
+ const q=Q[i];
+ if(k===q.a){
+  win(cur==0);const gain=cur==0?100+20*streak:50;if(cur==0)streak++;coins+=gain;tries.push(cur);done=true;pub();draw();
+  document.getElementById('m').innerHTML=`<div class="msg">🎉 BETUL! / CORRECT! +${gain} 🪙<br>🔓 Stage ${i+2<=20?i+2:'Tamat'} dibuka / unlocked</div><div class="c"><button class="btn" onclick="i++;cur=0;bad=[];done=false;draw()">${i==19?'TAMAT / FINISH ▶':'STAGE SETERUSNYA ▶ / NEXT ▶'}</button></div>`;
+ }else{
+  cur++;streak=0;bad.push(k);draw();
+  document.getElementById('m').innerHTML=`<div class="msg">💥 SALAH! Cuba lagi.<br><small class="en">Wrong! Try again.</small></div>`;
+ }
+}
+function fin(){
+ if(!tfin||i===Q.length){tfin=Date.now()}fanfare();pub();
+ const s=tries.filter(x=>!x).length,r=s>=18?3:s>=14?2:s>=10?1:0,R2=['Noob 🐣','Builder 🧱','Pro ⭐','Legend 👑'][r];
+ const rv=Q.map((q,k)=>tries[k]?`<div class="rv">${k+1}. ${b(q.q)}<br>✅ ${'ABCD'[q.a]}. ${b(q.o[q.a])}<br>🔁 ${tries[k]}x salah / wrong</div>`:'').join('');
+ $.innerHTML=bar()+`<div class="card c"><div class="em">${['🐣','🧱','⭐','👑'][r]}</div><h2>${esc(name)}: ${R2}</h2><div class="msg">Skor percubaan pertama / First-try score: ${s}/20<br>🪙 ${coins} • ⏱ ${Math.round((tfin-t0)/1000)}s</div><div style="text-align:left"><b>Semak / Review</b>${rv||' 🎉 Sempurna! / Perfect!'}</div><p><button class="btn" onclick="again()">${R?'KEMBALI KE LOBI / BACK TO LOBBY':'MAIN SEMULA / PLAY AGAIN'}</button></p></div>${R?'<div id="lb"></div>':''}`;upd();
+}
+function again(){reset();tfin=0;if(R){i=-2;pub()}else i=-1;draw()}
+(async()=>{try{if(window.claude){RM=await claude.use('room');const u=await claude.use('user');host=!!(u&&await u.canEdit())}}catch(e){}if(i===-1)draw()})();
+draw();
+</script></body></html>
